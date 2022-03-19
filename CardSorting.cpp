@@ -81,9 +81,6 @@ std::vector<char> ReorderKey(std::vector<char> InputList, std::vector<char> key)
 
 int main()
 {
-	setvbuf(stdout, NULL, _IONBF, 0);
-	setvbuf(stderr, NULL, _IONBF, 0);
-
     std::vector<char> const key = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'j', 'q', 'k'};
 
     int l = 200; // Setting random inputs to test sort
