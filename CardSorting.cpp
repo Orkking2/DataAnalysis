@@ -53,7 +53,7 @@ int main()
     std::vector<char> UnsortedPrint;
     int seed;
     for(int i = 0; i < l; i++){
-        CardInputList.emplace_back(card {key[rand() % (key.size() - 1)]});
+        CardInputList.emplace_back(card {key[rand() % key.size()]});
         UnsortedPrint.emplace_back(CardInputList.back().id);
     }
     PrintCharList(UnsortedPrint);
