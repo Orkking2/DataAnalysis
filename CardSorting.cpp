@@ -16,7 +16,7 @@ std::vector<card> IndexCardList(std::deque<card> in, std::vector<char> const &ke
     }
     while(!in.empty()){
         card currCard = in.back();
-        for(int i = 0; i < sizeof(CardIndex); i++){
+        for(int i = 0; i < CardIndex.size(); i++){
             if(currCard.id == CardIndex[i].id){
                 CardIndex[i].count++;
                 break; // Stops after finding correct id
