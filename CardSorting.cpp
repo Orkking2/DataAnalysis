@@ -29,7 +29,7 @@ std::vector<Card> IndexCardList(std::vector<char> in, std::vector<char> const &k
         CardIndex.push_back(Card {c});
     }
     for(char c : in){
-        for(int i = 0; i < CardIndex.size(); i++){
+        for(int i = 0; i < static_cast<int> (CardIndex.size()); i++){
             if(c == CardIndex[i].id){
                 CardIndex[i].count++;
                 break; // Stops after finding correct id
@@ -51,7 +51,7 @@ std::vector<Card> IndexUsingHashmap(std::vector<char> in, std::vector<char> cons
     return out;
 }
 
-std::vector<char> ReconstructList(std::vector<card> const &IndexedList){
+std::vector<char> ReconstructList(std::vector<Card> const &IndexedList){
     std::vector<char> out;
     for(Card c : IndexedList){
         while(c.count){
@@ -70,10 +70,10 @@ void PrintCharList(std::vector<char> in){ // Utility
 }
 
 std::vector<char> ReorderKey(std::vector<char> InputList, std::vector<char> key){
-    InputList = IndexCardList(InputList, key);
-    std::sort(InputList[0].count, InputList[InputList.size() - 1].count) // Using a sort method in a sorting algorithm lol
+    std::vector<Card> CardList = IndexCardList(InputList, key);
+
     key.clear();
-    for(Card c : InputList){
+    for(Card c : CardList){
         key.push_back(c.id);
     }
     return key;
@@ -81,35 +81,36 @@ std::vector<char> ReorderKey(std::vector<char> InputList, std::vector<char> key)
 
 int main()
 {
-    using print = std::cout;
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+
     std::vector<char> const key = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'j', 'q', 'k'};
 
     int l = 200; // Setting random inputs to test sort
     std::vector<char> CardInputList;
-    int seed;
     for(int i = 0; i < l; i++){
         CardInputList.emplace_back(key[rand() % key.size()]);
     }
 
-    { print << "Time to print char list;\n";
+    { std::cout << "Time to print char list;\n";
     Timer t;
     PrintCharList(CardInputList); // Unsorted list and print time for reference
     }
 
-    { print << "Time to reconstruct char list:\n";
-    std::vector<card> dummyList = {'d', l};
+    { std::cout << "Time to reconstruct char list:\n";
+    std::vector<Card> dummyList = {Card({'d', l})};
     Timer t;
     ReconstructList(dummyList);
     }
-    
+
     // Sorting;
 
-    { print << "Inc list with ordered key:\n";
+    { std::cout << "Inc list with ordered key:\n";
     Timer t;
     PrintCharList(ReconstructList(IndexCardList(CardInputList, key))); // You can unroll these if you want -- I'm just saving lines
     }
 
-    { print << "Inc sort with ideal key;\n";
+    { std::cout << "Inc sort with ideal key;\n";
     auto idealKey = ReorderKey(CardInputList, key);
     std::cout << "New key:\n";
     PrintCharList(idealKey);
@@ -117,7 +118,7 @@ int main()
     PrintCharList(ReconstructList(IndexCardList(CardInputList, idealKey)));
     }
 
-    { print << "Hashmap sort:\n";
+    { std::cout << "Hashmap sort: ";
     Timer t;
     PrintCharList(ReconstructList(IndexUsingHashmap(CardInputList, key)));
     }
