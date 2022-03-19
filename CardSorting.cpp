@@ -117,7 +117,7 @@ int main()
     PrintCharList(ReconstructList(IndexCardList(CardInputList, idealKey)));
     }
 
-    { print << "Hashmap sort: ";
+    { print << "Hashmap sort:\n";
     Timer t;
     PrintCharList(ReconstructList(IndexUsingHashmap(CardInputList, key)));
     }
